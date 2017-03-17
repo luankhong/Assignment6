@@ -1,8 +1,8 @@
-QUnit.test( 'hello test', function( assert ) {
-    assert.ok( 1 == '1', 'Passed!' );
+QUnit.test('hello test', function(assert) {
+    assert.ok(1 == '1', 'Passed!');
 });
 
-QUnit.test('DataStore.prototype.get', function( assert ) {
+QUnit.test('DataStore.prototype.get', function(assert) {
     var App = window.App;
     var ds = new App.DataStore();
     ds.add('m@bond.com', 'tea');
@@ -12,26 +12,35 @@ QUnit.test('DataStore.prototype.get', function( assert ) {
     assert.ok(ds.get('james@bond.com') == 'eshpressho', 'key of dr@no.com returned eshpressho');
 });
 
-QUnit.test('DataStore.prototype.getAll', function( assert ) {
+QUnit.test('DataStore.prototype.getAll', function(assert) {
     var App = window.App;
     var ds = new App.DataStore();
     ds.add('m@bond.com', 'tea');
     ds.add('james@bond.com', 'eshpressho');
 
-    var orders = ds.getAll();   //<--------------Testing getAll()
+    var orders = ds.getAll(); //<--------------Testing getAll()
     assert.ok(orders['m@bond.com'] == 'tea', 'key of m@bond.com returned tea');
     assert.ok(orders['james@bond.com'] == 'eshpressho', 'key of james@bond.com returned eshpressho');
 });
 
 //The problem I ran into is displaying diliverOrder() into Qunit assert..
-QUnit.test('Truck', function( assert ) {
+QUnit.test('Truck', function(assert) {
     var App = window.App;
     var Truck = App.Truck;
     var DataStore = App.DataStore;
     var truck = new Truck('ncc-1701', new DataStore());
-    truck.createOrder({emailAddress: 'me@goldfinger.com', coffee: 'double mocha'});
-    truck.createOrder({emailAddress: 'dr@no.com', coffee: 'decaf'});
-    truck.createOrder({emailAddress: 'm@bond.com', coffee: 'earl grey'});
+    truck.createOrder({
+        emailAddress: 'me@goldfinger.com',
+        coffee: 'double mocha'
+    });
+    truck.createOrder({
+        emailAddress: 'dr@no.com',
+        coffee: 'decaf'
+    });
+    truck.createOrder({
+        emailAddress: 'm@bond.com',
+        coffee: 'earl grey'
+    });
 
     var order1 = truck.db.get('me@goldfinger.com');
     var order2 = truck.db.get('dr@no.com');

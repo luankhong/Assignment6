@@ -2,7 +2,7 @@
     'use strict';
     var App = window.App || {};
     var $ = window.jQuery;
-    var emailSaved;
+    var checkedEmails = [];
 
     function FormHandler(selector) {
         if (!selector) {
@@ -23,6 +23,7 @@
 
             var data = {};
 
+
             var strengthSlider = document.getElementById('strengthLevel');
 
             $(this).serializeArray().forEach(function(item) {
@@ -32,21 +33,36 @@
             console.log(data);
             fn(data);
 
+            console.log(checkedEmails);
+
             //Chapter 10 Gold Challenge
-            if(data['size'] == 'coffeeZilla' && strengthSlider.value == 100 && data['flavor'] != '')
-            {
-                emailSaved = data['emailAddress'];
+            if (checkedEmails.indexOf(data['emailAddress']) != -1) {
+                $('#powerUpModal').modal('show');
+            } else if (data['size'] == 'coffeeZilla' && strengthSlider.value == 100 && data['flavor'] != '') {
                 $('#myModal').modal('show');
+                $('#saveAchievement').on('click', function() {
+                    if ($('input[name="usingAchievement"]:checked').val() == 'yes') {
+                        checkedEmails.push(data['emailAddress']);
+                        $('#powerUpModal').modal('show');
+                    }
+                    $('#myModal').modal('hide');
+                });
             }
+
+            $('#strengthLevelLabel').text('Caffeine Rating ' + +30);
+            document.getElementById('strengthLevelLabel').style.color = 'rgb(' + 0 + ',' + 195 + ',0)';
 
             this.reset();
             this.elements[0].focus();
         });
     };
 
-    $('#saveAchievement').on('click', function () {
-        console.log('email saved was ' + emailSaved);
-        $('#myModal').modal('hide');
+    //Chapter 10 Gold Challenge
+
+
+    $('#submitPowerUp').on('click', function() {
+        console.log('Added ' + $('input[name="powerUp"]:checked').val());
+        $('#powerUpModal').modal('hide');
     });
 
 
@@ -57,6 +73,7 @@
         document.getElementById('strengthLevelLabel').style.color = 'rgb(' + 0 + ',' + 195 + ',0)';
     };
 
+    //Chapter 10 Silver Challenge
     $('#strengthLevel').on('input change', function() {
         var greenLevel;
         var redLevel;
