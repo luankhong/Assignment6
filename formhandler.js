@@ -28,7 +28,9 @@
 
             $(this).serializeArray().forEach(function(item) {
                 data[item.name] = item.value;
-                console.log(item.name + ' is ' + item.value);
+                if(item.name != 'powerUp') {
+                    console.log(item.name + ' is ' + item.value);
+                }
             });
             console.log(data);
             fn(data);
